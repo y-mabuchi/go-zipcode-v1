@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"log"
+)
+
+func init() {
+	log.SetPrefix("Zipcode Converter: ")
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+}
 
 func main() {
-	fmt.Println("hello")
+	log.Println("log test")
 }
