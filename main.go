@@ -33,7 +33,6 @@ func main() {
 		}
 	}
 
-	for _, r := range results {
-		fmt.Println(r)
-	}
+	fmt.Println(results)
+	c.Write(results)
 }

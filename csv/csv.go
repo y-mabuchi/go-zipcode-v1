@@ -2,9 +2,12 @@ package csv
 
 import (
 	"encoding/csv"
+	"fmt"
 	"io"
 	"log"
 	"os"
+	"path/filepath"
+	"time"
 
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"
@@ -50,4 +53,44 @@ func (c *Csv) Read() [][]string {
 	}
 
 	return multiLine
+}
+
+func (c *Csv) Write(data [][]string) {
+	// Create timestamp for file name
+	format := "20060102150405"
+	timestamp := time.Now().Format(format)
+	fmt.Println(timestamp)
+
+	// Create file name
+	filename := timestamp + "_filtered_zipcode.csv"
+
+	// Get current directory
+	pwd, err := os.Getwd()
+	if err != nil {
+		log.Fatalf("action=Csv.Write.Getwd, status=error: %v\n", err)
+	}
+
+	// Create path
+	path := filepath.Join(pwd, "result_files", filename)
+
+	// Create empty file
+	file, err := os.Create(path)
+	if err != nil {
+		log.Fatalf("action=os.Create, status=error: %v\n", err)
+	}
+
+	// Call writer
+	writer := csv.NewWriter(file)
+	defer func() {
+		writer.Flush()
+		file.Close()
+	}()
+
+	// Write data
+	for _, v := range data {
+		err := writer.Write(v)
+		if err != nil {
+			log.Fatalf("action=writer.Write, status=error: %v\n", err)
+		}
+	}
 }
