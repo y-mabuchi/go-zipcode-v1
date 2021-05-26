@@ -2,6 +2,7 @@ package csv
 
 import (
 	"encoding/csv"
+	"io"
 	"log"
 	"os"
 
@@ -39,6 +40,9 @@ func (c *Csv) Read() [][]string {
 
 	for {
 		line, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
 		if err != nil {
 			log.Fatalf("action=Csv.Read.reader.Read, status=error: %v\n", err)
 		}
