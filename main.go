@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 )
 
@@ -10,5 +12,7 @@ func init() {
 }
 
 func main() {
-	log.Println("log test")
+	filename := flag.String("filename", "zipcode.csv", "CSV file name of Zipcode.")
+	flag.Parse()
+	fmt.Printf("file name: %v\n", *filename)
 }
