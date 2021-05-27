@@ -33,6 +33,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(results)
 	c.Write(results)
 }
